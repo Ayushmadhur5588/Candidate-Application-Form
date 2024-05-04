@@ -1,7 +1,5 @@
-const Jobcard = () => {
-  return (
-    <div>This is Jobcard</div>
-  )
-}
+const JobCard = (props) => {
+  return <div>This is Jobcard</div>;
+};
 
-export default Jobcard
+export default JobCard;

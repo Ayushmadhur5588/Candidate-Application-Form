@@ -1,38 +1,23 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { addJob } from "../utils/jobsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import useFetchJobData from "../hooks/useFetchJobData";
+import JobCard from "./JobCard";
+import Jobcard from "./JobCard";
 const Body = () => {
-  const dispatch = useDispatch();
+  const jobs = useSelector((store) => store.jobs.jobList);
 
-  const getData = async () => {
-    const response = await fetch(
-      "https://api.weekday.technology/adhoc/getSampleJdJSON",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          limit: 10,
-          offset: 0,
-        }),
-      }
-    );
+  useFetchJobData();
 
-    const data = await response.json();
-
-    console.log(data);
-    dispatch(addJob(data.jdList));
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  if(jobs === null){
+    return "Loading";
+  }
 
   return (
     <div>
       <div className="job-container"></div>
       <h2>Hello</h2>
+      {jobs.map((job) => (
+        <JobCard key={job.jdUid} data={job} />
+      ))}
     </div>
   );
 };
