@@ -11,13 +11,12 @@ const Body = () => {
   const dispatch = useDispatch();
   const searchVal = useRef("");
 
-  const jobs = useSelector((store) => store.jobs.jobList);
   const filteredJobs = useSelector((store) => store.jobs.filteredjobList);
- 
-  if (jobs === null) {
+
+  if (filteredJobs === null) {
     return "Loading";
   }
-console.log(jobs);
+
   const handleClick = () => {
     console.log(searchVal);
     const filteredList = jobs.filter((job) =>

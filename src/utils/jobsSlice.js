@@ -3,16 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const jobsSlice = createSlice({
   name: "jobs",
   initialState: {
-    jobList: null,
-    filteredjobList: null,
+    jobList: [],
+    filteredjobList: [],
     viewjob : false
   },
   reducers: {
     addJob: (state, action) => {
-      state.jobList = action.payload;
+      state.jobList = [...state.jobList, ...action.payload]; // Append new data to existing list
     },
     addFilteredJob: (state, action) => {
       state.filteredjobList = action.payload;
+    },
+    addAllJob : (state, action) => {
+      state.filteredjobList = [...state.filteredjobList, ...action.payload]; // Append new data to existing list
     },
     toggleViewJob : (state) => {
       state.viewjob = !state.viewjob;
@@ -20,6 +23,6 @@ const jobsSlice = createSlice({
   },
 });
 
-export const { addJob , toggleViewJob, addFilteredJob} = jobsSlice.actions;
+export const { addJob , toggleViewJob, addFilteredJob, addAllJob} = jobsSlice.actions;
 
 export default jobsSlice.reducer;
