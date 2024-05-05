@@ -5,6 +5,7 @@ import "./Body.css";
 
 const Body = () => {
   const jobs = useSelector((store) => store.jobs.jobList);
+  const dispatch = useDispatch();
 
   useFetchJobData();
 

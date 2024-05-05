@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { toggleViewJob } from "../utils/jobsSlice";
+import React, { useState } from "react";
 
-const JobCard = (props) => {
+const JobCard = ({ data }) => {
   const {
     companyName,
     jdLink,
@@ -14,12 +13,12 @@ const JobCard = (props) => {
     minJdSalary,
     minExp,
     salaryCurrencyCode,
-  } = props.data;
+  } = data;
 
-  const dispatch = useDispatch();
-  const viewJob = useSelector((store) => store.jobs?.viewjob);
+  const [viewJob, setViewJob] = useState(false);
+
   const handleClick = () => {
-    dispatch(toggleViewJob());
+    setViewJob(!viewJob);
   };
 
   return (
@@ -42,7 +41,9 @@ const JobCard = (props) => {
           <p className="job-details">{jobDetailsFromCompany}</p>
         </div>
         <div className="btn-container">
-          <button className="view-btn" onClick={handleClick}>{viewJob ? 'Show Less' : 'Show More'}</button>
+          <button className="view-btn" onClick={handleClick}>
+            {viewJob ? 'Show Less' : 'Show More'}
+          </button>
         </div>
         <h4 className="min-exp">Minimum Experience</h4>
         <h4 className="min-expval">{minExp} years</h4>
