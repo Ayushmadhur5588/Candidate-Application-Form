@@ -1,3 +1,6 @@
+import { useDispatch, useSelector } from "react-redux";
+import { toggleViewJob } from "../utils/jobsSlice";
+
 const JobCard = (props) => {
   const {
     companyName,
@@ -13,28 +16,39 @@ const JobCard = (props) => {
     salaryCurrencyCode,
   } = props.data;
 
-  console.log(props);
+  const dispatch = useDispatch();
+  const viewJob = useSelector((store) => store.jobs?.viewjob);
+  const handleClick = () => {
+    dispatch(toggleViewJob());
+  };
+
   return (
     <div className="job-card">
       <div className="img">
         <img className="logo" src={logoUrl} alt="logo" />
-
         <div className="job-container">
           <ul>
-            <li>{companyName}</li>
-            <li>{jobRole}</li>
-            <li>{location}</li>
+            <li className="company-name">{companyName}</li>
+            <li className="job-role">{jobRole}</li>
+            <li className="location">{location}</li>
           </ul>
         </div>
       </div>
       <div>
-        <h6>Estimated Salary:</h6>
-        <h3>About Company:</h3>
-        <h4>About us</h4>
-        <h4>Minimum Experience</h4>
-        <h4>{minExp}</h4>
+        <h6 className="estimated-salary">Estimated Salary:</h6>
+        <h3 className="about-company">About Company:</h3>
+        <h4 className="about-us">About us</h4>
+        <div className={`paragraph-container ${viewJob ? "full-content" : ""}`}>
+          <p className="job-details">{jobDetailsFromCompany}</p>
+        </div>
+        <div className="btn-container">
+          <button className="view-btn" onClick={handleClick}>{viewJob ? 'Show Less' : 'Show More'}</button>
+        </div>
+        <h4 className="min-exp">Minimum Experience</h4>
+        <h4 className="min-expval">{minExp} years</h4>
+        <button className="easy-apply">⚡️ Easy Apply</button>
+        <button className="unlock-btn">⚡️ Unlock Referral Asks</button>
       </div>
-      <button>Easy Apply</button>
     </div>
   );
 };

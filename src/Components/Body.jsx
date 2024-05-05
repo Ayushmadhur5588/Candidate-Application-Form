@@ -14,11 +14,10 @@ const Body = () => {
 
   return (
     <div>
-      <div className="job-container flex-container">
-        {/*jobs.map((job) => (
+      <div className="jobs-container flex-container">
+        {jobs.map((job) => (
           <JobCard key={job.jdUid} data={job} />
-        ))*/}
-        <JobCard data={jobs[0]}/>
+        ))}
       </div>
     </div>
   );
