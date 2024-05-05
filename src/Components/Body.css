@@ -5,8 +5,8 @@
 
 .jobs-container {
     margin: 40px;
-    padding-left: 10%;
-    padding-right: 10%;
+    justify-content: center;
+    
 }
 
 .job-card {
@@ -18,13 +18,14 @@
     border-radius: 2%;
     box-shadow: 0px 0px 10px rgba(128, 128, 128, 0.5);
     padding: 20px;
-    font-family: Courier, monospace;
+    font-weight: 200;
+    font-family: Verdana
 }
 
 .flex-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     /* Or any other value depending on your layout preference */
 }
 

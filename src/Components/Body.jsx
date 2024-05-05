@@ -1,22 +1,42 @@
 import { useDispatch, useSelector } from "react-redux";
+import { addFilteredJob } from "../utils/jobsSlice";
+import { useRef } from "react";
 import useFetchJobData from "../hooks/useFetchJobData";
 import JobCard from "./JobCard";
 import "./Body.css";
+import Filter from "./Filter";
 
 const Body = () => {
-  const jobs = useSelector((store) => store.jobs.jobList);
-  const dispatch = useDispatch();
-
   useFetchJobData();
+  const dispatch = useDispatch();
+  const searchVal = useRef("");
 
+  const jobs = useSelector((store) => store.jobs.jobList);
+  const filteredJobs = useSelector((store) => store.jobs.filteredjobList);
+  console.log(jobs);
   if (jobs === null) {
     return "Loading";
   }
 
+  const handleClick = () => {
+    console.log(searchVal);
+    const filteredList = jobs.filter((job) =>
+      job.companyName
+        .toLowerCase()
+        .includes(searchVal.current.value.toLowerCase())
+    );
+    dispatch(addFilteredJob(filteredList));
+  };
+
   return (
     <div>
+      <div className="filters">
+        <Filter />
+        {/*<input ref={searchVal} type="text" placeholder="search" />
+        <button onClick={handleClick}>Search</button>*/}
+      </div>
       <div className="jobs-container flex-container">
-        {jobs.map((job) => (
+        {filteredJobs.map((job) => (
           <JobCard key={job.jdUid} data={job} />
         ))}
       </div>

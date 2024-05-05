@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { url } from "../utils/constants";
-import { addJob } from "../utils/jobsSlice";
+import { addFilteredJob, addJob } from "../utils/jobsSlice";
 
 const useFetchJobData = () => {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const useFetchJobData = () => {
     const data = await response.json();
 
     dispatch(addJob(data.jdList));
+    dispatch(addFilteredJob(data.jdList));
   };
 
   useEffect(() => {

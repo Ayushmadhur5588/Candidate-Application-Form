@@ -1,0 +1,28 @@
+* {
+    margin: 0px;
+    padding: 0px;
+
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+ justify-content: center;
+}
+
+.select-wrapper {
+    width: 280px;
+    margin-right: 10px;
+    font-family: Verdana;
+    font-weight: 200;
+    font-size: 15px;
+}
+
+.exp-container {
+    width: 150px;
+    margin-right: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 200;
+    font-size: 15px;
+}

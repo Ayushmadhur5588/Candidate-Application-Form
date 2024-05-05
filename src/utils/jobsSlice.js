@@ -4,11 +4,15 @@ const jobsSlice = createSlice({
   name: "jobs",
   initialState: {
     jobList: null,
+    filteredjobList: null,
     viewjob : false
   },
   reducers: {
     addJob: (state, action) => {
       state.jobList = action.payload;
+    },
+    addFilteredJob: (state, action) => {
+      state.filteredjobList = action.payload;
     },
     toggleViewJob : (state) => {
       state.viewjob = !state.viewjob;
@@ -16,6 +20,6 @@ const jobsSlice = createSlice({
   },
 });
 
-export const { addJob , toggleViewJob} = jobsSlice.actions;
+export const { addJob , toggleViewJob, addFilteredJob} = jobsSlice.actions;
 
 export default jobsSlice.reducer;
