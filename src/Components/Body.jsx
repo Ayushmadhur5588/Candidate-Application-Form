@@ -13,11 +13,11 @@ const Body = () => {
 
   const jobs = useSelector((store) => store.jobs.jobList);
   const filteredJobs = useSelector((store) => store.jobs.filteredjobList);
-  console.log(jobs);
+ 
   if (jobs === null) {
     return "Loading";
   }
-
+console.log(jobs);
   const handleClick = () => {
     console.log(searchVal);
     const filteredList = jobs.filter((job) =>
