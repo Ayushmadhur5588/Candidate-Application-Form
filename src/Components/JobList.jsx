@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import useFetchJobData from "../hooks/useFetchJobData";
-import JobCard from "./JobCard";
+import JobCard from "./JobCard.jsx";
 import Filter from "./Filter";
 import "../styles/joblist.css";
 
