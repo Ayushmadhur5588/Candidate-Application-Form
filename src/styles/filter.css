@@ -12,11 +12,12 @@
 }
 
 .select-wrapper {
-    width: 280px;
+    width: fit-content;
     margin-right: 10px;
     font-family: Verdana;
     font-weight: 200;
     font-size: 15px;
+    margin-bottom: 8px;
 }
 
 .exp-container {
@@ -25,4 +26,18 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 200;
     font-size: 15px;
+    margin-bottom: 8px;
 }
+
+.search {
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: transparent;
+    margin-right: 10px;
+    color: grey;
+  }
+
+ 
+  

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Select from "react-select";
-import "./filter.css";
+import "../styles/filter.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addFilteredJob } from "../utils/jobsSlice";
 import {
@@ -9,17 +9,31 @@ import {
   exp_options,
   remote_options,
   location_options,
-  min_salary_options, // Added min_salary_options import
+  min_salary_options,
 } from "../utils/constants";
 
 const Filter = () => {
-  const [selectedFilters, setSelectedFilters] = useState(null);
-  const [locationFilter, setLocationFilter] = useState(null);
-  const [remoteFilter, setRemoteFilter] = useState(null);
-  const [minExperienceFilter, setMinExperienceFilter] = useState(null); // Added state for minimum experience filter
-  const [minSalaryFilter, setMinSalaryFilter] = useState(null); // Added state for minimum salary filter
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [locationFilter, setLocationFilter] = useState([]);
+  const [remoteFilter, setRemoteFilter] = useState([]);
+  const [minExperienceFilter, setMinExperienceFilter] = useState([]);
+  const [minSalaryFilter, setMinSalaryFilter] = useState([]);
+  const [val, setVal] = useState("");
   const dispatch = useDispatch();
   const jobs = useSelector((store) => store.jobs.jobList);
+
+  const handleClick = () => {
+    const filteredList = jobs.filter((job) =>
+      job.companyName.toLowerCase().includes(val.toLowerCase())
+    );
+    dispatch(addFilteredJob(filteredList));
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
+  };
 
   const handleFilterChange = (selectedOptions) => {
     setSelectedFilters(selectedOptions);
@@ -29,7 +43,7 @@ const Filter = () => {
       remoteFilter,
       minExperienceFilter,
       minSalaryFilter
-    ); // Updated to include minExperienceFilter and minSalaryFilter
+    );
   };
 
   const handleLocationFilter = (selectedOptions) => {
@@ -40,7 +54,7 @@ const Filter = () => {
       remoteFilter,
       minExperienceFilter,
       minSalaryFilter
-    ); // Updated to include minExperienceFilter and minSalaryFilter
+    );
   };
 
   const handleRemoteFilter = (selectedOptions) => {
@@ -51,7 +65,7 @@ const Filter = () => {
       selectedOptions,
       minExperienceFilter,
       minSalaryFilter
-    ); // Updated to include minExperienceFilter and minSalaryFilter
+    );
   };
 
   const handleMinExperienceFilter = (selectedOptions) => {
@@ -62,7 +76,7 @@ const Filter = () => {
       remoteFilter,
       selectedOptions,
       minSalaryFilter
-    ); // Updated to include minSalaryFilter
+    );
   };
 
   const handleMinSalaryFilter = (selectedOptions) => {
@@ -73,7 +87,7 @@ const Filter = () => {
       remoteFilter,
       minExperienceFilter,
       selectedOptions
-    ); // Updated to include minExperienceFilter
+    );
   };
 
   const applyFilters = (
@@ -83,47 +97,41 @@ const Filter = () => {
     minExperienceFilters,
     minSalaryFilters
   ) => {
-    // Filter jobs based on selected filters
     const filteredJobs = jobs.filter((job) => {
-      // Check if any selected role matches the job's role
-      const roleMatch = roleFilters
+      const roleMatch = roleFilters.length
         ? roleFilters.some((option) =>
             job.jobRole.toLowerCase().includes(option.value.toLowerCase())
           )
         : true;
 
-      // Check if any selected location matches the job's location
-      const locationMatch = locationFilters
+      const locationMatch = locationFilters.length
         ? locationFilters.some((option) =>
             job.location.toLowerCase().includes(option.value.toLowerCase())
           )
         : true;
 
-      // Check if any selected remote matches the job's remote
-      const remoteMatch = remoteFilters
+      const remoteMatch = remoteFilters.length
         ? remoteFilters.some((option) =>
             job.location.toLowerCase().includes(option.value.toLowerCase())
           )
         : true;
 
-      const minExperienceMatch = minExperienceFilters
+      const minExperienceMatch = minExperienceFilters.length
         ? minExperienceFilters.some((option) => {
-            const minExperienceValue = parseInt(option.value); // Parse the option value to integer
-            const jobMinExperience = parseFloat(job?.minExp); // Parse the job's minimum experience to integer
-            return jobMinExperience >= minExperienceValue; // Compare job's minimum experience with the selected minimum experience value
+            const minExperienceValue = parseInt(option.value);
+            const jobMinExperience = parseFloat(job?.minExp);
+            return jobMinExperience >= minExperienceValue;
           })
         : true;
 
-      // Check if any selected minimum salary matches the job's minimum salary
-      const minSalaryMatch = minSalaryFilters
+      const minSalaryMatch = minSalaryFilters.length
         ? minSalaryFilters.some((option) => {
-            const minSalaryValue = parseInt(option.value); // Parse the option value to integer
-            const jobMinSalary = parseFloat(job?.minJdSalary); // Parse the job's minimum salary to float
-            return jobMinSalary >= minSalaryValue; // Compare job's minimum salary with the selected minimum salary value
+            const minSalaryValue = parseInt(option.value);
+            const jobMinSalary = parseFloat(job?.minJdSalary);
+            return jobMinSalary >= minSalaryValue;
           })
         : true;
 
-      // Return true only if all filters match
       return (
         roleMatch &&
         locationMatch &&
@@ -133,8 +141,17 @@ const Filter = () => {
       );
     });
 
-    // Dispatch the filtered jobs
-    dispatch(addFilteredJob(filteredJobs));
+    if (
+      !roleFilters.length &&
+      !locationFilters.length &&
+      !remoteFilters.length &&
+      !minExperienceFilters.length &&
+      !minSalaryFilters.length
+    ) {
+      dispatch(addFilteredJob(jobs));
+    } else {
+      dispatch(addFilteredJob(filteredJobs));
+    }
   };
 
   return (
@@ -146,8 +163,6 @@ const Filter = () => {
           placeholder="Roles"
           onChange={handleFilterChange}
           isMulti
-          noOptionsMessage={() => "No Roles Found"}
-          styles={{}}
         />
       </div>
       <div className="select-wrapper">
@@ -157,8 +172,6 @@ const Filter = () => {
           placeholder="Number of Employees"
           onChange={handleFilterChange}
           isMulti
-          noOptionsMessage={() => "No Roles Found"}
-          styles={{}}
         />
       </div>
       <div className="exp-container">
@@ -168,8 +181,6 @@ const Filter = () => {
           placeholder="Experience"
           onChange={handleMinExperienceFilter}
           isMulti
-          noOptionsMessage={() => "No Roles Found"}
-          styles={{}}
         />
       </div>
       <div className="exp-container">
@@ -179,8 +190,6 @@ const Filter = () => {
           placeholder="Remote"
           onChange={handleRemoteFilter}
           isMulti
-          noOptionsMessage={() => "No Roles Found"}
-          styles={{}}
         />
       </div>
       <div className="select-wrapper">
@@ -190,8 +199,6 @@ const Filter = () => {
           placeholder="Location"
           onChange={handleLocationFilter}
           isMulti
-          noOptionsMessage={() => "No Roles Found"}
-          styles={{}}
         />
       </div>
       <div className="select-wrapper">
@@ -201,8 +208,16 @@ const Filter = () => {
           placeholder="Minimum Base Pay Salary"
           onChange={handleMinSalaryFilter}
           isMulti
-          noOptionsMessage={() => "No Roles Found"}
-          styles={{}}
+        />
+      </div>
+      <div className="search-box">
+        <input
+          className="search"
+          type="text"
+          placeholder="Search Company Name"
+          value={val}
+          onChange={(e) => setVal(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
       </div>
     </div>

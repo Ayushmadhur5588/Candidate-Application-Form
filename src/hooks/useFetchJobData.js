@@ -8,7 +8,6 @@ const useFetchJobData = () => {
   const [offset, setOffset] = useState(0);
 
   const getData = async () => {
-    console.log("offset" + offset);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -28,9 +27,9 @@ const useFetchJobData = () => {
 
   useEffect(() => {
     getData();
-  }, [offset]); 
+  }, [offset]);
 
-const handleScroll = () => {
+  const handleScroll = () => {
     const scrollPosition = window.innerHeight + window.scrollY;
     const pageHeight = document.body.offsetHeight;
 

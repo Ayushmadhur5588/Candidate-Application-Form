@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import { useState } from "react";
+import "../styles/jobcard.css";
 const JobCard = ({ data }) => {
   const {
     companyName,
@@ -15,16 +15,13 @@ const JobCard = ({ data }) => {
     salaryCurrencyCode,
   } = data;
 
-  const [viewJob, setViewJob] = useState(false);
-
-  const handleClick = () => {
-    setViewJob(!viewJob);
-  };
-
   return (
     <div className="job-card">
       <div className="img">
-        <img className="logo" src={logoUrl} alt="logo" />
+        <a href={logoUrl} target="_blank" rel="noopener noreferrer">
+          <img className="logo" src={logoUrl} alt="logo" />
+        </a>
+
         <div className="job-container">
           <ul>
             <li className="company-name">{companyName}</li>
@@ -34,19 +31,40 @@ const JobCard = ({ data }) => {
         </div>
       </div>
       <div>
-        <h6 className="estimated-salary">Estimated Salary:</h6>
+        <p className="estimated-salary">
+          Estimated Salary:
+          {minJdSalary && !maxJdSalary && ` ₹${minJdSalary} LPA`}
+          {!minJdSalary && maxJdSalary && ` ₹${maxJdSalary} LPA`}
+          {minJdSalary &&
+            maxJdSalary &&
+            ` ₹${minJdSalary} - ${maxJdSalary} LPA`}
+          {!minJdSalary && !maxJdSalary && "N/A"}
+          {minJdSalary && maxJdSalary && " ✅"}
+        </p>
+
         <h3 className="about-company">About Company:</h3>
         <h4 className="about-us">About us</h4>
-        <div className={`paragraph-container ${viewJob ? "full-content" : ""}`}>
+
+        <div className={"paragraph-container"}>
           <p className="job-details">{jobDetailsFromCompany}</p>
         </div>
         <div className="btn-container">
-          <button className="view-btn" onClick={handleClick}>
-            {viewJob ? 'Show Less' : 'Show More'}
-          </button>
+          <a href={jdLink}>
+            <button
+              className="view-btn"
+              onClick={() => {
+                window.location.href = { jdLink };
+              }}
+            >
+              View Job
+            </button>
+          </a>
         </div>
+
         <h4 className="min-exp">Minimum Experience</h4>
-        <h4 className="min-expval">{minExp} years</h4>
+        <h4 className="min-expval">
+          {minExp !== null ? `${minExp} years` : "\u00A0"}
+        </h4>
         <button className="easy-apply">⚡️ Easy Apply</button>
         <button className="unlock-btn">⚡️ Unlock Referral Asks</button>
       </div>

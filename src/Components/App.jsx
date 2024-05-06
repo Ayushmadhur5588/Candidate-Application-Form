@@ -1,12 +1,11 @@
 import { Provider } from "react-redux";
 import appStore from "../utils/appStore";
-import Body from "./Body";
-import Bodyy from "./Body_";
+import JobList from "./JobList";
 const App = () => {
   return (
     <Provider store={appStore}>
       <div>
-        <Body />
+        <JobList />
       </div>
     </Provider>
   );
