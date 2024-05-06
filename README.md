@@ -13,7 +13,7 @@ This project is a candidate application platform that allows users to view job l
     cd Candidate-Application-Form
 
 3.  Install the project dependencies:
-   ```bash
+    ```bash
    npm install
 
 ## Usage
