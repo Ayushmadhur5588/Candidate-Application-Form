@@ -14,10 +14,10 @@ This project is a candidate application platform that allows users to view job l
 
 3.  Install the project dependencies:
     ```bash
-   npm install
+    npm install
 
 ## Usage
 After installing the dependencies, start the development server by running:
     ```bash
-    npm run dev
+   npm run dev
 
