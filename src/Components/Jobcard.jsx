@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "../styles/jobcard.css";
 const JobCard = ({ data }) => {
   const {
