@@ -17,7 +17,7 @@ This project is a candidate application platform that allows users to view job l
     npm install
 
 ## Usage
-After installing the dependencies, start the development server by running:
+1. After installing the dependencies, start the development server by running:
     ```bash
    npm run dev
 
